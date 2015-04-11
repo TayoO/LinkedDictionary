@@ -114,7 +114,7 @@ public class LinkedDictionaryTest {
 
     @Test()
     public void testContainsNotFound() {
-        System.out.println("test: testContainsNoFound");
+        System.out.println("test: testContainsNotFound");
         LinkedDictionary dict = new LinkedDictionary();
         dict.put("X", new Token(1));
         dict.put("Y", new Token(2));

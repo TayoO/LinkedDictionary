@@ -5,7 +5,7 @@ import java.util.NoSuchElementException;
 public class LinkedDictionary implements Map<String, Token> {
     Elem head;
     
-		public class Elem {
+		private static class Elem {
 		String key;
 		Token value;
 		Elem next;
@@ -20,18 +20,31 @@ public class LinkedDictionary implements Map<String, Token> {
 		@Override
 		public Token get(String key) throws NoSuchElementException {
 			// TODO Auto-generated method stub
-			if (head.key==null || key==null)
+			if ( key==null)
+			{
+				throw new NullPointerException();
+			}
+			if (head==null)
 			{
 				throw new NoSuchElementException();
 			}
+			/*if (head.key==null)
+			{
+				throw new NoSuchElementException();
+			}
+			*/
 			else
 			{
 				Elem p= head;
-				while (p.key!=null)
+				if (p.key.equals(key))
 				{
-					if (p.key== key)
+					return p.value;
+				}
+				while (p.next!=null)
+				{
+					if (p.next.key.equals(key))
 					{
-						return p.value;
+						return p.next.value;
 					}
 						p=p.next;
 				}
@@ -41,27 +54,35 @@ public class LinkedDictionary implements Map<String, Token> {
 
 		@Override
 		public boolean contains(String key) {
-			if (head.key==null)
+			if (key==null)
+			{
+				throw new NullPointerException();
+			}
+			if (head==null)
 			{
 				return false;
 			}
 			else
 			{
 				Elem p= head;
-				while (p.key!=null)
+				while (p!=null)
 				{
-					if (p.key== key)
+					if (p.key.equals(key))
 					{
 						return true;
 					}
 						p=p.next;
 				}
+				return false;
 			}
-			return false;
 		}
 
 		@Override
 		public void put(String key, Token value) {
+			if (key==null)
+			{
+				throw new NullPointerException();
+			}
 			head= new Elem (key, value, head);
 			// TODO Auto-generated method stub
 			
@@ -70,15 +91,23 @@ public class LinkedDictionary implements Map<String, Token> {
 		@Override
 		public void replace(String key, Token value)
 				throws NoSuchElementException {
+			if (key==null)
+			{
+				throw new NullPointerException();
+			}
 			if (contains(key))
 			{
 				System.out.print("contains true");
 				Elem p= head;
-				while (p.key!=null)
+				if (p.key.equals(key))
 				{
-					if (p.key== key)
+					p.value=value;
+				}
+				while (p.next!=null)
+				{
+					if (p.next.key.equals(key))
 					{
-						p.value=value;
+						p.next.value=value;
 					}
 						p=p.next;
 				}
@@ -95,9 +124,13 @@ public class LinkedDictionary implements Map<String, Token> {
 		@Override
 		public Token remove(String key) throws NoSuchElementException {
 			// TODO Auto-generated method stub
+			if (key ==null)
+			{
+				throw new NullPointerException();
+			}
 			if (contains(key))
 			{
-				if (head.key==key)
+				if (head.key.equals(key))
 				{
 					Token removed=head.value;
 					head= head.next;
@@ -107,7 +140,7 @@ public class LinkedDictionary implements Map<String, Token> {
 				Elem p= head;
 				while (p.next!=null)
 				{
-					if (p.next.key== key)
+					if (p.next.key.equals(key))
 					{
 						Token removed=p.next.value;
 						p.next=p.next.next;
@@ -115,12 +148,14 @@ public class LinkedDictionary implements Map<String, Token> {
 					}
 						p=p.next;
 				}
+				throw new NoSuchElementException();
 			}
 			else
 			{
 				throw new NoSuchElementException();
 			}
-			return null;
+				
+	
 		}
 
 }
